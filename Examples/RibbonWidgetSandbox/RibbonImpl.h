@@ -9,7 +9,7 @@ class RibbonImpl : public RibbonWidget::Ribbon
 		RibbonImpl(QWidget* parent = nullptr);
 
 
-	private:
+	
 		struct SettingsButtons
 		{
 			RibbonWidget::RibbonButton* settings1;
@@ -20,8 +20,8 @@ class RibbonImpl : public RibbonWidget::Ribbon
 
 		struct WorkButtons
 		{
-			RibbonWidget::RibbonButton* open;
-			RibbonWidget::RibbonButton* save;
+			RibbonWidget::InformativeToolButton* open;
+			RibbonWidget::InformativeToolButton* save;
 		};
 
 		struct EditButtons
@@ -31,6 +31,10 @@ class RibbonImpl : public RibbonWidget::Ribbon
 		};
 
 
+		SettingsButtons& settingsButtons();
+		WorkButtons& workButtons();
+		EditButtons& editButtons();
+	private:
 		SettingsButtons m_settingsButtons;
 		WorkButtons m_workButtons;
 		EditButtons m_editButtons;

@@ -19,8 +19,8 @@ RibbonImpl::RibbonImpl(QWidget* parent)
 	m_settingsButtons.settingsCancel= new RibbonWidget::RibbonButton("Cancel", "Cancel", "close", true, groupSettings);
 	m_settingsButtons.settingsSave	= new RibbonWidget::RibbonButton("Settings Save", "Settings Save", "floppy_disk", true, groupSettings);
 
-	m_workButtons.open = new RibbonWidget::RibbonButton("Open", "Open", "document", true, groupWork);
-	m_workButtons.save = new RibbonWidget::RibbonButton("Save", "Save", "floppy_disk", true, groupWork);
+	m_workButtons.open = new RibbonWidget::InformativeToolButton("Open", "Open", "document", true, groupWork);
+	m_workButtons.save = new RibbonWidget::InformativeToolButton("Save", "Save", "floppy_disk", true, groupWork);
 
 	m_editButtons.undo = new RibbonWidget::RibbonButton("Undo", "Undo", "arrowCClockwise", true, groupEdit);
 	m_editButtons.redo = new RibbonWidget::RibbonButton("Redo", "Redo", "arrowClockwise", true, groupEdit);
@@ -28,4 +28,17 @@ RibbonImpl::RibbonImpl(QWidget* parent)
 	// Add tabs
 	addTab(tabSettings);
 	addTab(tabEdit);
+}
+
+RibbonImpl::SettingsButtons& RibbonImpl::settingsButtons()
+{
+	return m_settingsButtons;
+}
+RibbonImpl::WorkButtons& RibbonImpl::workButtons()
+{
+	return m_workButtons;
+}
+RibbonImpl::EditButtons& RibbonImpl::editButtons()
+{
+	return m_editButtons;
 }

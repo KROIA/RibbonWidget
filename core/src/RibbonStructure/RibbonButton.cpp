@@ -40,6 +40,11 @@ namespace RibbonWidget
 			parent->addButton(this);
 	}
 
+	RibbonButton::~RibbonButton()
+	{
+
+	}
+
 
 	/*void RibbonButton::setParentGroup(RibbonButtonGroup* parentGroup)
 	{

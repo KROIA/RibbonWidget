@@ -7,21 +7,34 @@
 #include <QLabel>
 
 #include "RW_base.h"
+#include "RibbonStructure/ribbonButton.h"
 #include "utilities/progressBar.h"
 #include "utilities/loadingCircle.h"
 
-class RIBBONWIDGET_EXPORT InformativeToolButton: public QToolButton
+namespace RibbonWidget
 {
-    Q_OBJECT
+    class RIBBONWIDGET_EXPORT InformativeToolButton : public RibbonButton
+    {
+        Q_OBJECT
     public:
-        InformativeToolButton(QWidget *parent = nullptr);
+        InformativeToolButton(RibbonButtonGroup* parent = nullptr);
+        InformativeToolButton(const QString& text,
+            const QString& toolTip,
+            const QIcon& icon,
+            bool enabled,
+            RibbonButtonGroup* parent = nullptr);
+        InformativeToolButton(const QString& text,
+            const QString& toolTip,
+            const QString& iconName,
+            bool enabled,
+            RibbonButtonGroup* parent = nullptr);
         ~InformativeToolButton();
 
-        void setOverlayColor(const QColor &color);
+        void setOverlayColor(const QColor& color);
         void setOverlayEnable(bool enable);
         void overlayFlash(float flashSpeed, int flashCount = 1, bool endWithEnabledOverlay = false);
 
-        const QColor &getOverlayColor() const;
+        const QColor& getOverlayColor() const;
         bool overlayEnabled() const;
 
         void setPercentage(float percentage);
@@ -30,16 +43,17 @@ class RIBBONWIDGET_EXPORT InformativeToolButton: public QToolButton
         void enableLoadingCircle(bool enable);
         bool isLoadingCircleEnabled() const;
 
-    private:
-        void paintEvent (QPaintEvent *e);
-
-    private slots:
+        private slots:
         void onUpdateTimer();
         void activateTimer();
         void stopTimer();
         void checkForTimerNeeded();
 
-	private:
+    private:
+        void setup();
+        void paintEvent(QPaintEvent* e);
+
+
         // Overlay
         QColor m_overlayColor;
         bool m_overlayEnable;
@@ -59,6 +73,7 @@ class RIBBONWIDGET_EXPORT InformativeToolButton: public QToolButton
 
 
 
-        QTimer *m_updateTimer;
-};
+        QTimer* m_updateTimer;
+    };
 
+}

@@ -24,6 +24,7 @@ namespace RibbonWidget
 			bool enabled,
 			RibbonButtonGroup* parent = nullptr);
 
+		virtual ~RibbonButton();
 
 		//void setParentGroup(RibbonButtonGroup* parentGroup);
 		//RibbonButtonGroup* parentGroup() const;

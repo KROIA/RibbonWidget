@@ -12,6 +12,9 @@ public:
 	MainWindow(QWidget *parent = nullptr);
 	~MainWindow();
 
+private slots:
+	void onOpenClicked();
+	void onSaveClicked();
 private:
 	Ui::MainWindow ui;
 	RibbonImpl* m_ribbon;
