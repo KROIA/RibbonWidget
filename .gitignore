@@ -40,6 +40,6 @@
 build
 lib
 out
-dependencies
 include
 PerformanceTests
+bin

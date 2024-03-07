@@ -4,6 +4,7 @@
 #include <chrono>
 
 #ifndef BUILD_STATIC
+#define PLUGIN_LIBRARY
 # if defined(RIBBONWIDGET_LIB)
 #  define RIBBONWIDGET_EXPORT Q_DECL_EXPORT
 # else

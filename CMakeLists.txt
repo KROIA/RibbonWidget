@@ -24,7 +24,7 @@
 set(LIBRARY_NAME RibbonWidget)                   # <LIBRARY_NAME>
 
 # Define is only active if the library is built
-set(LIB_DEFINE RIBBON_WIDGET_LIB)                # <LIB_DEFINE>
+set(LIB_DEFINE RIBBONWIDGET_LIB)                # <LIB_DEFINE>
 
 # macro to enable profiling
 set(LIB_PROFILE_DEFINE RW_PROFILING)  # <LIB_PROFILE_DEFINE>  
@@ -59,6 +59,9 @@ set(CMAKE_INSTALL_PREFIX ${CMAKE_SOURCE_DIR})   # Default install path
 set(RELATIVE_BUILD_FOLDER build)                # Relative path to the build folder
 set(RELATIVE_INSTALL_FOLDER lib)                # Relative path to the install folder
 
+
+set(COMPILE_EXAMPLES ON)						# <COMPILE_EXAMPLES>
+set(COMPILE_TESTS ON)							# <COMPILE_TESTS>
 # --------------------------------------------------------------------------------
 # --------------------------------------------------------------------------------
 # --------------------------------------------------------------------------------
@@ -83,6 +86,9 @@ include(cmake/dependencies.cmake)
 include(cmake/ExampleMaster.cmake)
 
 add_subdirectory(core)
-add_subdirectory(examples)
-add_subdirectory(unitTests)
-
+if(COMPILE_EXAMPLES)
+    add_subdirectory(examples)
+endif()
+if(COMPILE_TESTS)
+    add_subdirectory(unitTests)
+endif()
