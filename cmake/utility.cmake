@@ -49,6 +49,10 @@ endfunction()
    set(UNIQUE_TARGET_NAME "deploy_${TARGETPATH_HASH}_${targetName}")
    message("DeploymentTargetName: ${UNIQUE_TARGET_NAME}")
 
+   if(TARGET ${UNIQUE_TARGET_NAME})
+	   message("Target ${UNIQUE_TARGET_NAME} already exists")
+	   return()
+   endif()
    add_custom_target(${UNIQUE_TARGET_NAME} ALL
        DEPENDS "${targetExePath}"
    )
