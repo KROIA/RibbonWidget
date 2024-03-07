@@ -155,7 +155,7 @@ copyLibraryHeaders("${CMAKE_CURRENT_SOURCE_DIR}/${INCLUDE_PATH}" "${CMAKE_INSTAL
 
 
 if(QT_ENABLE AND QT_DEPLOY)
-    DEPLOY_QT(${QT_PATH} profiler_gui "$<TARGET_FILE_DIR:profiler_gui>/$<TARGET_FILE_NAME:profiler_gui>" ${INSTALL_BIN_PATH})
+    DEPLOY_QT(profiler_gui ${INSTALL_BIN_PATH})
 endif()
 
 
