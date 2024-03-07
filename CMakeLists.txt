@@ -61,7 +61,7 @@ set(RELATIVE_INSTALL_FOLDER lib)                # Relative path to the install f
 
 
 set(COMPILE_EXAMPLES ON)						# <COMPILE_EXAMPLES>
-set(COMPILE_TESTS ON)							# <COMPILE_TESTS>
+set(COMPILE_UNITTESTS ON)						# <COMPILE_UNITTESTS>
 # --------------------------------------------------------------------------------
 # --------------------------------------------------------------------------------
 # --------------------------------------------------------------------------------
@@ -86,9 +86,10 @@ include(cmake/dependencies.cmake)
 include(cmake/ExampleMaster.cmake)
 
 add_subdirectory(core)
-if(COMPILE_EXAMPLES)
+
+if(COMPILE_EXAMPLES AND NOT RIBBONWIDGET_NO_EXAMPLE)
     add_subdirectory(examples)
 endif()
-if(COMPILE_TESTS)
+if(COMPILE_UNITTESTS AND NOT RIBBONWIDGET_NO_UNITTESTS)
     add_subdirectory(unitTests)
 endif()
