@@ -11,7 +11,7 @@ namespace RibbonWidget
 	}
 
 
-	QString DefaultIconLoader::getIconPath(const QString& name)
+	/*QString DefaultIconLoader::getIconPath(const QString& name)
 	{
 		const DefaultIconLoader &instance = DefaultIconLoader::instance();
 		return instance.m_iconBasePath + "/" + name + instance.m_iconFileExtention;
@@ -25,28 +25,28 @@ namespace RibbonWidget
 	{
 		return instance().m_iconFileExtention;
 	}
+	*/
 
 
-
-	const QIcon& DefaultIconLoader::getIcon(const QString& name)
+	const QIcon& DefaultIconLoader::getIcon(const QString& path)
 	{
 		DefaultIconLoader& instance = DefaultIconLoader::instance();
-		auto it = instance.m_icons.find(name);
+		auto it = instance.m_icons.find(path);
 		if (it != instance.m_icons.end())
 		{
 			return *it->second;
 		}
 
-		QString path = instance.getIconPath(name);
+		//QString path = instance.getIconPath(path);
 
 		QIcon* icon = new QIcon(path);
-		instance.m_icons[name] = icon;
+		instance.m_icons[path] = icon;
 		return *icon;
 	}
 
 	DefaultIconLoader::DefaultIconLoader()
-		: m_iconBasePath(":/icons")
-		, m_iconFileExtention(".png")
+		//: m_iconBasePath(":/icons")
+		//, m_iconFileExtention(".png")
 	{
 		Q_INIT_RESOURCE(RibbonIcons);
 	}

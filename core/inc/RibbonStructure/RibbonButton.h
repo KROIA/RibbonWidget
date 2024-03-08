@@ -20,7 +20,7 @@ namespace RibbonWidget
 			RibbonButtonGroup* parent = nullptr);
 		RibbonButton(const QString& text,
 			const QString& toolTip,
-			const QString& iconName,
+			const QString& iconPaht,
 			bool enabled,
 			RibbonButtonGroup* parent = nullptr);
 

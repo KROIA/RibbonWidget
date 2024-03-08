@@ -25,13 +25,13 @@ namespace RibbonWidget
 			Ribbon* parent = nullptr);
 		explicit RibbonTab(
 			const QString& tabTitle,
-			const QString& tabIconName,
+			const QString& iconPath,
 			const std::vector<RibbonButtonGroup*>& groups,
 			Ribbon* parent = nullptr);
 
 		explicit RibbonTab(
 			const QString& tabTitle,
-			const QString& tabIconName,
+			const QString& iconPath,
 			Ribbon* parent = nullptr);
 
 		virtual ~RibbonTab();

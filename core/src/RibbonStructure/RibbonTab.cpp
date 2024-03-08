@@ -39,7 +39,7 @@ namespace RibbonWidget
 	}
 	RibbonTab::RibbonTab(
 		const QString& tabTitle,
-		const QString& tabIconName,
+		const QString& iconPath,
 		const std::vector<RibbonButtonGroup*>& groups,
 		Ribbon* parent)
 		: QWidget(parent->getTabWidget())
@@ -49,7 +49,7 @@ namespace RibbonWidget
 	{
 		ui->setupUi(this);
 		setTitle(tabTitle);
-		setIcon(DefaultIconLoader::getIcon(tabIconName));
+		setIcon(DefaultIconLoader::getIcon(iconPath));
 		for (auto group : groups)
 		{
 			addGroup(group);
@@ -59,7 +59,7 @@ namespace RibbonWidget
 	}
 	RibbonTab::RibbonTab(
 		const QString& tabTitle,
-		const QString& tabIconName,
+		const QString& iconPath,
 		Ribbon* parent)
 		: QWidget(parent->getTabWidget())
 		, ui(new Ui::RibbonTab)
@@ -68,7 +68,7 @@ namespace RibbonWidget
 	{
 		ui->setupUi(this);
 		setTitle(tabTitle);
-		setIcon(DefaultIconLoader::getIcon(tabIconName));
+		setIcon(DefaultIconLoader::getIcon(iconPath));
 		if (parent)
 			parent->addTab(this);
 	}

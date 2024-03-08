@@ -27,14 +27,14 @@ namespace RibbonWidget
 
 	RibbonButton::RibbonButton(const QString& text,
 		const QString& toolTip,
-		const QString& iconName,
+		const QString& iconPath,
 		bool enabled,
 		RibbonButtonGroup* parent)
 		: QToolButton(parent)
 	{
 		setText(text);
 		setToolTip(toolTip);
-		setIcon(DefaultIconLoader::getIcon(iconName));
+		setIcon(DefaultIconLoader::getIcon(iconPath));
 		setEnabled(enabled);
 		if (parent)
 			parent->addButton(this);
