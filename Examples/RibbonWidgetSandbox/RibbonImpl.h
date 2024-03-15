@@ -30,12 +30,21 @@ class RibbonImpl : public RibbonWidget::Ribbon
 			RibbonWidget::RibbonButton* redo;
 		};
 
+		struct ViewButtons
+		{
+			RibbonWidget::InformativeToolButton* view1;
+			RibbonWidget::InformativeToolButton* view2;
+			RibbonWidget::InformativeToolButton* view3;
+		};
+
 
 		SettingsButtons& settingsButtons();
 		WorkButtons& workButtons();
 		EditButtons& editButtons();
+		ViewButtons& viewButtons();
 	private:
 		SettingsButtons m_settingsButtons;
 		WorkButtons m_workButtons;
 		EditButtons m_editButtons;
+		ViewButtons m_viewButtons;
 };

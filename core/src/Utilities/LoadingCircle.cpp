@@ -86,8 +86,10 @@ void LoadingCircle::draw(QPainter &painter)
 {
     if(!m_isVisible)return;
     qreal circleRadius = m_radius*0.25f;
+    
 
-    int pointCount = 3;
+    int pointCount = 5;
+    qreal circleRadiusIncrement = circleRadius / (pointCount*3);
     float angleOffset = M_PI_4;
     for(int i=0; i<pointCount; ++i)
     {
@@ -100,6 +102,7 @@ void LoadingCircle::draw(QPainter &painter)
         painter.setPen(Qt::NoPen);
         painter.setBrush(col);
         painter.drawEllipse(dotPos, circleRadius, circleRadius);
+        circleRadius += circleRadiusIncrement;
     }
 
 

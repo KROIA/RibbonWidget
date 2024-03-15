@@ -1,4 +1,7 @@
+#define _USE_MATH_DEFINES // for C++
+#include <cmath>
 #include "Buttons/InformativeToolButton.h"
+
 
 #include <QDebug>
 
@@ -72,19 +75,38 @@ namespace RibbonWidget
     {
         return m_overlayEnable;
     }
-    void InformativeToolButton::setPercentage(float percentage)
+    void InformativeToolButton::setProgressColor(const QColor& color)
     {
-
-        m_progressBar.setPercentage(percentage);
-        if (m_progressBar.getPercentage() > 0)
+		m_progressBar.setColor(color);
+    }
+    const QColor& InformativeToolButton::getProgressColor() const
+    {
+		return m_progressBar.getColor();
+    }
+    void InformativeToolButton::setProgress(float percentage)
+    {
+        m_progressBar.setProgress(percentage);
+        if (m_progressBar.getProgress() > 0.0001)
             m_progressBar.setVisible(true);
         else
             m_progressBar.setVisible(false);
         checkForTimerNeeded();
     }
-    float InformativeToolButton::getPercentage() const
+    float InformativeToolButton::getProgress() const
     {
-        return m_progressBar.getPercentage();
+        return m_progressBar.getProgress();
+    }
+    void InformativeToolButton::setProgressBarVerticalOffset(int offset)
+    {
+        m_progressBarVerticalOffset = offset;
+    }
+    void InformativeToolButton::setLoadingCircleColor(const QColor& color)
+    {
+        m_loadingCircle.setColor(color);
+    }
+    const QColor& InformativeToolButton::getLoadingCircleColor() const
+    {
+		return m_loadingCircle.getColor();
     }
     void InformativeToolButton::enableLoadingCircle(bool enable)
     {
@@ -96,6 +118,22 @@ namespace RibbonWidget
     bool InformativeToolButton::isLoadingCircleEnabled() const
     {
         return m_loadingCircle.isVisible();
+    }
+    void InformativeToolButton::setLoadingCircleSpeed(float speed)
+    {
+		m_loadingCircle.setDeltaAngle(speed);
+    }
+    float InformativeToolButton::getLoadingCircleSpeed() const
+    {
+        return m_loadingCircle.getDeltaAngle();
+    }
+    void InformativeToolButton::setLoadingCircleAngle(float angle)
+    {
+        m_loadingCircle.setAngle(angle);
+    }
+    float InformativeToolButton::getLoadingCircleAngle() const
+    {
+		return m_loadingCircle.getAngle();
     }
 
 
@@ -109,6 +147,7 @@ namespace RibbonWidget
         m_doFlash = false;
         m_flashEndWithEnabledOverlay = false;
         m_flashEndPhase = 0;
+        m_progressBarVerticalOffset = 0;
 
         m_progressBar.setColor(QColor(0, 230, 0, 255));
         m_progressBar.setVisible(false);
@@ -134,19 +173,14 @@ namespace RibbonWidget
             painter.fillRect(QRect(QPoint(0, 0), this->size()), QBrush(col));
         }
 
-        if (m_progressBar.getPercentage() > 0)
+        if (m_progressBar.getProgress() > 0.0001)
         {
             int width = size().width();
             int height = size().height();
-            int offset = 10;
             int barWidth = 5;
-            QRect rect(QPoint(offset, height - offset - barWidth), QSize(width - 2 * offset, barWidth));
+            QRect rect( QPoint(m_progressBarVerticalOffset, height - m_progressBarVerticalOffset - barWidth), 
+                        QSize(width - 2 * m_progressBarVerticalOffset, barWidth));
             m_progressBar.setRect(rect);
-            /*float percentage = m_progressBar.getPercentage();
-            percentage += 0.01;
-            if(percentage > 1)
-                percentage = 0;
-            m_progressBar.setPercentage(percentage);*/
             m_progressBar.draw(painter);
         }
 
@@ -157,13 +191,11 @@ namespace RibbonWidget
     }
     void InformativeToolButton::onUpdateTimer()
     {
-
         if (m_doFlash)
         {
             m_flashColorFactor = sin(m_flashPhase);
             m_flashColorFactor *= m_flashColorFactor;
             m_flashPhase += m_flashSpeed * 10.f / (M_PI * (float)m_updateTimer->interval());
-            //qDebug() << m_flashColorFactor << " phase: "<<m_flashPhase;
             if (m_flashPhase >= M_PI)
             {
                 m_flashPhase = 0;
@@ -177,7 +209,6 @@ namespace RibbonWidget
                     setOverlayEnable(false);
             }
         }
-
 
         m_loadingCircle.rotate();
         this->update();

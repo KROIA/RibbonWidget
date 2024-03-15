@@ -26,6 +26,15 @@ RibbonImpl::RibbonImpl(QWidget* parent)
 	m_editButtons.undo = new RibbonWidget::RibbonButton("Undo", "Undo", ":/icons/arrowCClockwise.png", true, groupEdit);
 	m_editButtons.redo = new RibbonWidget::RibbonButton("Redo", "Redo", ":/icons/arrowClockwise.png", true, groupEdit);
 
+	m_viewButtons.view1 = new RibbonWidget::InformativeToolButton("View 1", "View 1", ":/icons/file_2.png", true, groupEdit);
+	m_viewButtons.view1->setLoadingCircleColor(QColor(255, 0, 0));
+	m_viewButtons.view1->enableLoadingCircle(true);
+
+	m_viewButtons.view2 = new RibbonWidget::InformativeToolButton("View 1", "View 1", ":/icons/file_2.png", true, groupEdit);
+	m_viewButtons.view2->setProgressColor(QColor(0, 255, 255));
+	m_viewButtons.view2->setProgress(50);
+	m_viewButtons.view3 = new RibbonWidget::InformativeToolButton("View 1", "View 1", ":/icons/file_2.png", true, groupEdit);
+
 	// Add tabs
 	addTab(tabSettings);
 	addTab(tabEdit);
@@ -42,4 +51,8 @@ RibbonImpl::WorkButtons& RibbonImpl::workButtons()
 RibbonImpl::EditButtons& RibbonImpl::editButtons()
 {
 	return m_editButtons;
+}
+RibbonImpl::ViewButtons& RibbonImpl::viewButtons()
+{
+	return m_viewButtons;
 }

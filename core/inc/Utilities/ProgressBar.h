@@ -23,7 +23,7 @@ class RIBBONWIDGET_EXPORT ProgressBar: public QObject
         ProgressBar(const QRect &area, float percentage);
         ProgressBar(const QRect &area, float percentage, const QColor color);
 
-        float getPercentage() const;
+        float getProgress() const;
         const QColor getColor() const;
         bool isVisible() const;
         const QRect getRect();
@@ -31,7 +31,7 @@ class RIBBONWIDGET_EXPORT ProgressBar: public QObject
 
         void draw(QPainter &painter);
     public slots:
-        void setPercentage(float percentage);
+        void setProgress(float percentage);
         void setColor(const QColor color);
         void setVisible(bool isVisible);
         void setRect(const QRect area);

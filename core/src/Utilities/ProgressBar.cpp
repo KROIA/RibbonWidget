@@ -29,7 +29,7 @@ ProgressBar::ProgressBar(const QRect &area, float percentage, const QColor color
     m_direction = Direction::leftRight;
 }
 
-float ProgressBar::getPercentage() const
+float ProgressBar::getProgress() const
 {
     return m_percentage;
 }
@@ -74,7 +74,7 @@ void ProgressBar::draw(QPainter &painter)
     }
     painter.fillRect(rect,QBrush(m_color));
 }
-void ProgressBar::setPercentage(float percentage)
+void ProgressBar::setProgress(float percentage)
 {
     m_percentage = percentage;
     if(m_percentage < 0)

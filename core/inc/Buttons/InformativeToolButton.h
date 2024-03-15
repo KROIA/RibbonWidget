@@ -1,6 +1,5 @@
 #pragma once
-#define _USE_MATH_DEFINES // for C++
-#include <cmath>
+
 #include <QToolButton>
 #include <QPainter>
 #include <QTimer>
@@ -37,13 +36,22 @@ namespace RibbonWidget
         const QColor& getOverlayColor() const;
         bool overlayEnabled() const;
 
-        void setPercentage(float percentage);
-        float getPercentage() const;
+        void setProgressColor(const QColor& color);
+        const QColor& getProgressColor() const;
+        void setProgress(float percentage);
+        float getProgress() const;
+        void setProgressBarVerticalOffset(int offset);
 
+        void setLoadingCircleColor(const QColor& color);
+        const QColor& getLoadingCircleColor() const;
         void enableLoadingCircle(bool enable);
         bool isLoadingCircleEnabled() const;
+        void setLoadingCircleSpeed(float speed);
+        float getLoadingCircleSpeed() const;
+        void setLoadingCircleAngle(float angle);
+        float getLoadingCircleAngle() const;
 
-        private slots:
+    private slots:
         void onUpdateTimer();
         void activateTimer();
         void stopTimer();
@@ -64,14 +72,13 @@ namespace RibbonWidget
         float m_flashPhase;
         float m_flashEndPhase;
         float m_flashColorFactor;
+        int m_progressBarVerticalOffset;
 
 
         // Loadingbar
         ProgressBar m_progressBar;
 
         LoadingCircle m_loadingCircle;
-
-
 
         QTimer* m_updateTimer;
     };
