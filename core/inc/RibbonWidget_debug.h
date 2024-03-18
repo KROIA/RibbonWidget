@@ -1,5 +1,9 @@
 #pragma once
 
+/// USER_SECTION_START 1
+
+/// USER_SECTION_END
+
 // Debugging
 #ifdef NDEBUG
 #define RW_CONSOLE(msg)
@@ -14,7 +18,9 @@
 #define RW_CONSOLE_FUNCTION(msg) RW_CONSOLE_STREAM << __PRETTY_FUNCTION__ << " " << msg;
 #endif
 
+/// USER_SECTION_START 2
 
+/// USER_SECTION_END
 
 #ifdef RW_PROFILING
 #include "easy/profiler.h"
@@ -80,3 +86,8 @@
 #define RW_GENERAL_PROFILING_FUNCTION(colorStage) RW_PROFILING_FUNCTION(CONCAT_SYMBOLS(RW_GENERAL_PROFILING_COLORBASE, colorStage))
 #define RW_GENERAL_PROFILING_VALUE(name, value) RW_PROFILING_VALUE(name, value)
 #define RW_GENERAL_PROFILING_TEXT(name, value) RW_PROFILING_TEXT(name, value)
+
+
+/// USER_SECTION_START 3
+
+/// USER_SECTION_END

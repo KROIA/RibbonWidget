@@ -1,12 +1,12 @@
 #pragma once
 
-#include "RW_base.h"
+#include "RibbonWidget_base.h"
 #include <QTabWidget>
 
 namespace RibbonWidget
 {
 	class RibbonTab;
-	class RIBBONWIDGET_EXPORT Ribbon: public QObject
+	class RIBBON_WIDGET_EXPORT Ribbon: public QObject
 	{
 		Q_OBJECT
 	public:

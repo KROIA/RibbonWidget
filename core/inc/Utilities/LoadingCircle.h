@@ -1,13 +1,13 @@
 #pragma once
 
 
-#include "RW_base.h"
+#include "RibbonWidget_base.h"
 #include <QObject>
 #include <QRect>
 #include <QColor>
 #include <QPainter>
 
-class RIBBONWIDGET_EXPORT LoadingCircle : public QObject
+class RIBBON_WIDGET_EXPORT LoadingCircle : public QObject
 {
     Q_OBJECT
     public:

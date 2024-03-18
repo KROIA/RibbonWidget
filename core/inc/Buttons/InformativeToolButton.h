@@ -5,14 +5,14 @@
 #include <QTimer>
 #include <QLabel>
 
-#include "RW_base.h"
+#include "RibbonWidget_base.h"
 #include "RibbonStructure/ribbonButton.h"
 #include "utilities/progressBar.h"
 #include "utilities/loadingCircle.h"
 
 namespace RibbonWidget
 {
-    class RIBBONWIDGET_EXPORT InformativeToolButton : public RibbonButton
+    class RIBBON_WIDGET_EXPORT InformativeToolButton : public RibbonButton
     {
         Q_OBJECT
     public:

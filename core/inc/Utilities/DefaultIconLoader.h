@@ -1,13 +1,13 @@
 #pragma once
 
-#include "RW_base.h"
+#include "RibbonWidget_base.h"
 #include <QString>
 #include <QIcon>
 #include <unordered_map>
 
 namespace RibbonWidget
 {
-	class RIBBONWIDGET_EXPORT DefaultIconLoader
+	class RIBBON_WIDGET_EXPORT DefaultIconLoader
 	{
 	public:
 		static DefaultIconLoader& instance();

@@ -1,6 +1,6 @@
 #pragma once
 
-#include "RW_base.h"
+#include "RibbonWidget_base.h"
 #include <QToolButton>
 #include <QString>
 #include <QIcon>
@@ -8,7 +8,7 @@
 namespace RibbonWidget
 {
 	class RibbonButtonGroup;
-	class RIBBONWIDGET_EXPORT RibbonButton : public QToolButton
+	class RIBBON_WIDGET_EXPORT RibbonButton : public QToolButton
 	{
 
 	public:

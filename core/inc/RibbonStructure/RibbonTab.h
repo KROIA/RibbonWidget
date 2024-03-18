@@ -1,6 +1,6 @@
 #pragma once
 
-#include "RW_base.h"
+#include "RibbonWidget_base.h"
 #include <QWidget>
 #include <QIcon>
 
@@ -13,7 +13,7 @@ namespace RibbonWidget
 	class RibbonButtonGroup;
 	class RibbonButton;
 	class Ribbon;
-	class RIBBONWIDGET_EXPORT RibbonTab : public QWidget
+	class RIBBON_WIDGET_EXPORT RibbonTab : public QWidget
 	{
 		Q_OBJECT
 	public:
