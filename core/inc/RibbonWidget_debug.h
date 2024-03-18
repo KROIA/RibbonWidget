@@ -6,16 +6,16 @@
 
 // Debugging
 #ifdef NDEBUG
-#define RW_CONSOLE(msg)
-#define RW_CONSOLE_FUNCTION(msg)
+	#define RW_CONSOLE(msg)
+	#define RW_CONSOLE_FUNCTION(msg)
 #else
-#include <iostream>
+	#include <iostream>
 
-#define RW_DEBUG
-#define RW_CONSOLE_STREAM std::cout
+	#define RW_DEBUG
+	#define RW_CONSOLE_STREAM std::cout
 
-#define RW_CONSOLE(msg) RW_CONSOLE_STREAM << msg;
-#define RW_CONSOLE_FUNCTION(msg) RW_CONSOLE_STREAM << __PRETTY_FUNCTION__ << " " << msg;
+	#define RW_CONSOLE(msg) RW_CONSOLE_STREAM << msg;
+	#define RW_CONSOLE_FUNCTION(msg) RW_CONSOLE_STREAM << __PRETTY_FUNCTION__ << " " << msg;
 #endif
 
 /// USER_SECTION_START 2
@@ -23,33 +23,33 @@
 /// USER_SECTION_END
 
 #ifdef RW_PROFILING
-#include "easy/profiler.h"
-#include <easy/arbitrary_value.h> // EASY_VALUE, EASY_ARRAY are defined here
+	#include "easy/profiler.h"
+	#include <easy/arbitrary_value.h> // EASY_VALUE, EASY_ARRAY are defined here
 
-#define RW_PROFILING_BLOCK_C(text, color) EASY_BLOCK(text, color)
-#define RW_PROFILING_NONSCOPED_BLOCK_C(text, color) EASY_NONSCOPED_BLOCK(text, color)
-#define RW_PROFILING_END_BLOCK EASY_END_BLOCK
-#define RW_PROFILING_FUNCTION_C(color) EASY_FUNCTION(color)
-#define RW_PROFILING_BLOCK(text, colorStage) RW_PROFILING_BLOCK_C(text,profiler::colors::  colorStage)
-#define RW_PROFILING_NONSCOPED_BLOCK(text, colorStage) RW_PROFILING_NONSCOPED_BLOCK_C(text,profiler::colors::  colorStage)
-#define RW_PROFILING_FUNCTION(colorStage) RW_PROFILING_FUNCTION_C(profiler::colors:: colorStage)
-#define RW_PROFILING_THREAD(name) EASY_THREAD(name)
+	#define RW_PROFILING_BLOCK_C(text, color) EASY_BLOCK(text, color)
+	#define RW_PROFILING_NONSCOPED_BLOCK_C(text, color) EASY_NONSCOPED_BLOCK(text, color)
+	#define RW_PROFILING_END_BLOCK EASY_END_BLOCK
+	#define RW_PROFILING_FUNCTION_C(color) EASY_FUNCTION(color)
+	#define RW_PROFILING_BLOCK(text, colorStage) RW_PROFILING_BLOCK_C(text,profiler::colors::  colorStage)
+	#define RW_PROFILING_NONSCOPED_BLOCK(text, colorStage) RW_PROFILING_NONSCOPED_BLOCK_C(text,profiler::colors::  colorStage)
+	#define RW_PROFILING_FUNCTION(colorStage) RW_PROFILING_FUNCTION_C(profiler::colors:: colorStage)
+	#define RW_PROFILING_THREAD(name) EASY_THREAD(name)
 
-#define RW_PROFILING_VALUE(name, value) EASY_VALUE(name, value)
-#define RW_PROFILING_TEXT(name, value) EASY_TEXT(name, value)
+	#define RW_PROFILING_VALUE(name, value) EASY_VALUE(name, value)
+	#define RW_PROFILING_TEXT(name, value) EASY_TEXT(name, value)
 
 #else
-#define RW_PROFILING_BLOCK_C(text, color)
-#define RW_PROFILING_NONSCOPED_BLOCK_C(text, color)
-#define RW_PROFILING_END_BLOCK
-#define RW_PROFILING_FUNCTION_C(color)
-#define RW_PROFILING_BLOCK(text, colorStage)
-#define RW_PROFILING_NONSCOPED_BLOCK(text, colorStage)
-#define RW_PROFILING_FUNCTION(colorStage)
-#define RW_PROFILING_THREAD(name)
+	#define RW_PROFILING_BLOCK_C(text, color)
+	#define RW_PROFILING_NONSCOPED_BLOCK_C(text, color)
+	#define RW_PROFILING_END_BLOCK
+	#define RW_PROFILING_FUNCTION_C(color)
+	#define RW_PROFILING_BLOCK(text, colorStage)
+	#define RW_PROFILING_NONSCOPED_BLOCK(text, colorStage)
+	#define RW_PROFILING_FUNCTION(colorStage)
+	#define RW_PROFILING_THREAD(name)
 
-#define RW_PROFILING_VALUE(name, value)
-#define RW_PROFILING_TEXT(name, value)
+	#define RW_PROFILING_VALUE(name, value)
+	#define RW_PROFILING_TEXT(name, value)
 #endif
 
 // Special expantion tecniques are required to combine the color name

@@ -1,4 +1,3 @@
-cmake_minimum_required(VERSION 3.1.0)
 
 # Find the necessary QT modules
 set(QT_MODULES
@@ -14,7 +13,7 @@ set(deploy_qt ON)
 set(APP_ICON "${CMAKE_CURRENT_SOURCE_DIR}/AppIcon.rc")
 list(APPEND ADDITONAL_SOURCES ${APP_ICON})
 
-set(ADDITIONAL_LIBRARIES )
+list(APPEND ADDITIONAL_LIBRARIES )
 
 ## USER_SECTION_START 1
 
