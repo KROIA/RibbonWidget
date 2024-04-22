@@ -195,8 +195,8 @@ namespace RibbonWidget
         {
             m_flashColorFactor = sin(m_flashPhase);
             m_flashColorFactor *= m_flashColorFactor;
-            m_flashPhase += m_flashSpeed * 10.f / (M_PI * (float)m_updateTimer->interval());
-            if (m_flashPhase >= M_PI)
+            m_flashPhase += m_flashSpeed * 10.f / ((float)M_PI * (float)m_updateTimer->interval());
+            if (m_flashPhase >= (float)M_PI)
             {
                 m_flashPhase = 0;
                 m_flashCount--;
