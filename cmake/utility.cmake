@@ -33,29 +33,64 @@ function(DEPLOY_QT targetName outputPath)
         return()
     endif()
 
+	#install(TARGETS ${targetName}
+	#	BUNDLE  DESTINATION .
+	#	RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
+	#)
+	#qt_generate_deploy_app_script(
+	#	TARGET ${targetName}
+	#	OUTPUT_SCRIPT deploy_script
+	#	NO_UNSUPPORTED_PLATFORM_ERROR
+	#)
+	#install(SCRIPT ${deploy_script})
+	#return();
+	#
 	
-
-    string(MD5 TARGETPATH_HASH ${outputPath})
-    set(UNIQUE_TARGET_NAME "deploy_${TARGETPATH_HASH}_${targetName}")
-    message("DeploymentTargetName: ${UNIQUE_TARGET_NAME}")
- 
-    if(TARGET ${UNIQUE_TARGET_NAME})
-        message("Target ${UNIQUE_TARGET_NAME} already exists")
-        return()
-    endif()
-    add_custom_target(${UNIQUE_TARGET_NAME} ALL
-        DEPENDS "${targetName}"
-    ) 
-	 
-	# Define the custom command to be executed during installation
+	
+    # string(MD5 TARGETPATH_HASH ${outputPath})
+    # set(UNIQUE_TARGET_NAME "deploy_${TARGETPATH_HASH}_${targetName}")
+    # message("DeploymentTargetName: ${UNIQUE_TARGET_NAME}")
+	# 
+    # if(TARGET ${UNIQUE_TARGET_NAME})
+    #     message("Target ${UNIQUE_TARGET_NAME} already exists")
+    #     return()
+    # endif()
+    # add_custom_target(${UNIQUE_TARGET_NAME} ALL
+    #     DEPENDS "${targetName}"
+    # ) 
+	#  
+	# # Define the custom command to be executed during installation
     set(targetExePath "${INSTALL_BIN_PATH}/${targetName}.exe") 
-    set(DEPLOY_COMMAND  ${QT_PATH}/bin/windeployqt.exe --no-compiler-runtime --no-translations --no-system-d3d-compiler --no-opengl-sw --pdb --dir "${INSTALL_BIN_PATH}" "${targetExePath}")
-	string(REPLACE "\\" "/" DEPLOY_COMMAND "${DEPLOY_COMMAND}")
-	add_custom_command(
-		TARGET "${UNIQUE_TARGET_NAME}"  # Assuming my_executable is the target to be installed
-		POST_BUILD            # Specify that the command should be executed after building the target
-		COMMAND ${DEPLOY_COMMAND} 
-	)
+	# # Get the output directory for the target
+	set(TARGET_OUTPUT_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR})
+	# 
+	set(COPY_COMMAND "copy ${TARGET_OUTPUT_DIRECTORY}/${targetName}.exe ${targetExePath}")
+    set(DEPLOY_COMMAND  "${QT_PATH}/bin/windeployqt.exe --no-compiler-runtime --no-translations --no-system-d3d-compiler --no-opengl-sw --pdb --dir "${INSTALL_BIN_PATH}" "${targetExePath}"")
+	# 
+	set(CMD "${COPY_COMMAND} & ${DEPLOY_COMMAND}")
+	string(REPLACE "\\" "/" CMD "${CMD}")
+	# message("COMMAND: ${CMD}")
+	# add_custom_command(
+	# 	TARGET "${UNIQUE_TARGET_NAME}"  # Assuming my_executable is the target to be installed
+	# 	POST_BUILD            # Specify that the command should be executed after building the target
+	# 	COMMAND ${CMD} 
+	# )
+	
+	# Define arguments to be passed to the script
+
+	# Define a custom command to be executed after installation
+#install(
+#    SCRIPT ${CMAKE_CURRENT_SOURCE_DIR}/cmake/post_install_script.cmake
+#)
+	
+	install(
+    CODE
+    "execute_process(
+        COMMAND
+        ${CMD}
+    )"
+)
+	
 endfunction()
 
 
