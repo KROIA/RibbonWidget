@@ -33,7 +33,7 @@ float ProgressBar::getProgress() const
 {
     return m_percentage;
 }
-const QColor ProgressBar::getColor() const
+const QColor &ProgressBar::getColor() const
 {
     return m_color;
 }
@@ -41,11 +41,11 @@ bool ProgressBar::isVisible() const
 {
     return m_isVisible;
 }
-const QRect ProgressBar::getRect()
+const QRect &ProgressBar::getRect()
 {
     return m_area;
 }
-ProgressBar::Direction ProgressBar::getDirection() const
+const ProgressBar::Direction &ProgressBar::getDirection() const
 {
     return m_direction;
 }
