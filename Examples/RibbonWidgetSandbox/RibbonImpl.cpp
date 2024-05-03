@@ -10,7 +10,7 @@ RibbonImpl::RibbonImpl(QWidget* parent)
 	RibbonWidget::RibbonTab* tabEdit		= new RibbonWidget::RibbonTab("Editing", ":/icons/create_new_2.png", this);
 
 	// Create groups
-	RibbonWidget::RibbonButtonGroup* groupSettings	= new RibbonWidget::RibbonButtonGroup("group\nSettings", tabSettings);
+	RibbonWidget::RibbonButtonGroup* groupSettings	= new RibbonWidget::RibbonButtonGroup("groupSettings", tabSettings);
 	RibbonWidget::RibbonButtonGroup* groupWork		= new RibbonWidget::RibbonButtonGroup("groupWork", tabEdit);
 	RibbonWidget::RibbonButtonGroup* groupEdit		= new RibbonWidget::RibbonButtonGroup("groupEdit", tabEdit);
 
@@ -19,6 +19,8 @@ RibbonImpl::RibbonImpl(QWidget* parent)
 	m_settingsButtons.settingsOK	= new RibbonWidget::RibbonButton("Settings OK", "Settings OK", ":/icons/accept.png", true, groupSettings);
 	m_settingsButtons.settingsCancel= new RibbonWidget::RibbonButton("Cancel", "Cancel", ":/icons/close.png", true, groupSettings);
 	m_settingsButtons.settingsSave	= new RibbonWidget::RibbonButton("Settings Save", "Settings Save", ":/icons/floppy_disk.png", true, groupSettings);
+
+	m_settingsButtons.settings1->setIconSize(QSize(40, 40));
 
 	m_workButtons.open = new RibbonWidget::InformativeToolButton("Open", "Open", ":/icons/document.png", true, groupWork);
 	m_workButtons.save = new RibbonWidget::InformativeToolButton("Save", "Save", ":/icons/floppy_disk.png", true, groupWork);
