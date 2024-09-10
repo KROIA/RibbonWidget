@@ -4,7 +4,9 @@
 
 /// USER_SECTION_END
 
-#include "RibbonWidget_base.h"
+#include "RibbonWidget_global.h"
+#include "RibbonWidget_debug.h"
+
 #include <sstream>
 
 #define STRINGIFY(x) #x

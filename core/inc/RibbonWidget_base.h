@@ -6,6 +6,7 @@
 
 #include "RibbonWidget_global.h"
 #include "RibbonWidget_debug.h"
+#include "RibbonWidget_info.h"
 
 /// USER_SECTION_START 2
 
