@@ -1,5 +1,4 @@
 #include "RibbonWidget_info.h"
-#include "RibbonWidget_debug.h"
 
 /// USER_SECTION_START 1
 
@@ -151,25 +150,7 @@ namespace RibbonWidget
 	}
 #endif
 
-	// Implementation of the Profiler start/stop functions
-	void Profiler::start()
-	{
-#ifdef RW_PROFILING
-		EASY_PROFILER_ENABLE;
-#endif
-	}
-	void Profiler::stop()
-	{
-		stop("profile.prof");
-	}
-	void Profiler::stop(const char* profilerOutputFile)
-	{
-#ifdef RW_PROFILING
-		profiler::dumpBlocksToFile(profilerOutputFile);
-#else
-		(void)profilerOutputFile;
-#endif
-	}
+
 
 
 /// USER_SECTION_START 4
