@@ -30,7 +30,7 @@
     <number>0</number>
    </property>
    <item row="0" column="0">
-    <layout class="QVBoxLayout" name="verticalLayout" stretch="4,0,1">
+    <layout class="QVBoxLayout" name="verticalLayout" stretch="1,0,0">
      <property name="spacing">
       <number>0</number>
      </property>
@@ -76,6 +76,13 @@
          <horstretch>0</horstretch>
          <verstretch>0</verstretch>
         </sizepolicy>
+       </property>
+       <property name="font">
+        <font>
+         <pointsize>8</pointsize>
+         <weight>75</weight>
+         <bold>true</bold>
+        </font>
        </property>
        <property name="text">
         <string>ToolBar</string>
