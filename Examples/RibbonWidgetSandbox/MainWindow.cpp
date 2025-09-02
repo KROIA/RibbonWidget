@@ -4,7 +4,7 @@ MainWindow::MainWindow(QWidget *parent)
 	: QMainWindow(parent)
 {
 	ui.setupUi(this);
-	m_ribbon = new RibbonImpl(ui.ribbon_widget);
+	m_ribbon = new RibbonImpl(ui.mainToolBar);
 
 	ui.pushButton->setIcon(RibbonWidget::DefaultIconLoader::getIcon(":/icons/arrowCClockwise.png"));
 	//ui.pushButton->setIcon(QIcon(":/icons/live_folder_2.png"));

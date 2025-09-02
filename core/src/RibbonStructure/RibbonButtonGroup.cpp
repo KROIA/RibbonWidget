@@ -4,11 +4,13 @@
 #include "ui_ribbonbuttongroup.h"
 
 #include <QToolButton>
+#include <QPainter>
 namespace RibbonWidget
 {
 	RibbonButtonGroup::RibbonButtonGroup(RibbonTab* parent)
 		: QWidget(parent)
 		, ui(new Ui::RibbonButtonGroup)
+		, m_orientation(Qt::Orientation::Horizontal)
 	{
 		ui->setupUi(this);
 		if(parent)
@@ -20,6 +22,7 @@ namespace RibbonWidget
 		RibbonTab* parent)
 		: QWidget(parent)
 		, ui(new Ui::RibbonButtonGroup)
+		, m_orientation(Qt::Orientation::Horizontal)
 	{
 		ui->setupUi(this);
 		setTitle(groupTitle);
@@ -35,6 +38,7 @@ namespace RibbonWidget
 		RibbonTab* parent)
 		: QWidget(parent)
 		, ui(new Ui::RibbonButtonGroup)
+		, m_orientation(Qt::Orientation::Horizontal)
 	{
 		ui->setupUi(this);
 		setTitle(groupTitle);
@@ -82,4 +86,53 @@ namespace RibbonWidget
 		//button->setParentGroup(nullptr);
 		ui->horizontalLayout->removeWidget(button);
 	}
+
+	void RibbonButtonGroup::onOrientationChanged(Qt::Orientation o)
+	{
+		m_orientation = o;
+	}
+
+	/*void RibbonButtonGroup::paintEvent(QPaintEvent* event)
+	{
+		
+		switch (m_orientation)
+		{
+			case Qt::Orientation::Horizontal:
+			{
+				QWidget::paintEvent(event);
+				break;
+			}
+			case Qt::Orientation::Vertical:
+			{
+				QPainter p(this);
+				p.translate(width() / 2, height() / 2); // move to center
+				p.rotate(-90);                       // rotate everything
+				p.translate(-height() / 2, -width() / 2);
+
+				// Render child into the rotated painter
+				for (QObject* obj : children()) {
+					if (QWidget* child = qobject_cast<QWidget*>(obj)) {
+						child->render(&p);
+					}
+				}
+				break;
+			}
+		}		
+	}
+
+	QSize RibbonButtonGroup::sizeHint() const 
+	{
+		switch (m_orientation)
+		{
+			case Qt::Orientation::Horizontal:
+			{
+				return QWidget::sizeHint();
+			}
+			case Qt::Orientation::Vertical:
+			{
+				return QSize(QWidget::height(), QWidget::width()); // swapped
+			}
+		}
+		return QWidget::sizeHint();
+	}*/
 }

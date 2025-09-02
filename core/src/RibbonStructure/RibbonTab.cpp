@@ -4,6 +4,7 @@
 #include "RibbonStructure/RibbonButton.h"
 #include "RibbonStructure/Ribbon.h"
 #include "Utilities/DefaultIconLoader.h"
+#include <QSpacerItem>
 
 
 namespace RibbonWidget
@@ -12,10 +13,14 @@ namespace RibbonWidget
 		: QWidget(parent->getTabWidget())
 		, ui(new Ui::RibbonTab)
 		, m_title("")
+		, m_orientation(Qt::Orientation::Horizontal)
 	{
 		ui->setupUi(this);
 		if(parent)
 			parent->addTab(this);
+		m_layout = dynamic_cast<QGridLayout*>(ui->ribbonTabScrollAreaContent->layout());
+		m_spacer = new QSpacerItem(20, 40, QSizePolicy::Expanding, QSizePolicy::Minimum);
+		m_layout->addItem(m_spacer, 0, m_layout->count());
 	}
 	RibbonTab::RibbonTab(
 		const QString& tabTitle,
@@ -26,6 +31,7 @@ namespace RibbonWidget
 		, ui(new Ui::RibbonTab)
 		, m_title("")
 		, m_icon()
+		, m_orientation(Qt::Orientation::Horizontal)
 	{
 		ui->setupUi(this);
 		setTitle(tabTitle);
@@ -36,6 +42,9 @@ namespace RibbonWidget
 		}
 		if (parent)
 			parent->addTab(this);
+		m_layout = dynamic_cast<QGridLayout*>(ui->ribbonTabScrollAreaContent->layout());
+		m_spacer = new QSpacerItem(20, 40, QSizePolicy::Expanding, QSizePolicy::Minimum);
+		m_layout->addItem(m_spacer, 0, m_layout->count());
 	}
 	RibbonTab::RibbonTab(
 		const QString& tabTitle,
@@ -46,6 +55,7 @@ namespace RibbonWidget
 		, ui(new Ui::RibbonTab)
 		, m_title("")
 		, m_icon()
+		, m_orientation(Qt::Orientation::Horizontal)
 	{
 		ui->setupUi(this);
 		setTitle(tabTitle);
@@ -56,6 +66,9 @@ namespace RibbonWidget
 		}
 		if (parent)
 			parent->addTab(this);
+		m_layout = dynamic_cast<QGridLayout*>(ui->ribbonTabScrollAreaContent->layout());
+		m_spacer = new QSpacerItem(20, 40, QSizePolicy::Expanding, QSizePolicy::Minimum);
+		m_layout->addItem(m_spacer, 0, m_layout->count());
 	}
 	RibbonTab::RibbonTab(
 		const QString& tabTitle,
@@ -65,12 +78,16 @@ namespace RibbonWidget
 		, ui(new Ui::RibbonTab)
 		, m_title("")
 		, m_icon()
+		, m_orientation(Qt::Orientation::Horizontal)
 	{
 		ui->setupUi(this);
 		setTitle(tabTitle);
 		setIcon(DefaultIconLoader::getIcon(iconPath));
 		if (parent)
 			parent->addTab(this);
+		m_layout = dynamic_cast<QGridLayout*>(ui->ribbonTabScrollAreaContent->layout());
+		m_spacer = new QSpacerItem(20, 40, QSizePolicy::Expanding, QSizePolicy::Minimum);
+		m_layout->addItem(m_spacer, 0, m_layout->count());
 	}
 
 
@@ -102,18 +119,33 @@ namespace RibbonWidget
 
 	void RibbonTab::addGroup(RibbonButtonGroup* group)
 	{
-		ui->ribbonHorizontalLayout->addWidget(group);
+		m_layout->removeItem(m_spacer);
+		switch (m_orientation)
+		{
+			case Qt::Orientation::Horizontal:
+			{
+				m_layout->addWidget(group, 0, m_layout->count());
+				m_layout->addItem(m_spacer, 0, m_layout->count());
+				break;
+			}
+			case Qt::Orientation::Vertical:
+			{
+				m_layout->addWidget(group, m_layout->count(), 0);
+				m_layout->addItem(m_spacer, m_layout->count(), 0);
+				break;
+			}
+		}
 	}
 
 	void RibbonTab::removeGroup(RibbonButtonGroup* group)
 	{
 		// Find ribbon group
-		for (int i = 0; i < ui->ribbonHorizontalLayout->count(); i++)
+		for (int i = 0; i < m_layout->count(); i++)
 		{
-			RibbonButtonGroup* containedGroup = qobject_cast<RibbonButtonGroup*>(ui->ribbonHorizontalLayout->itemAt(i)->widget());
+			RibbonButtonGroup* containedGroup = qobject_cast<RibbonButtonGroup*>(m_layout->itemAt(i)->widget());
 			if (containedGroup == group)
 			{
-				ui->ribbonHorizontalLayout->removeWidget(group); /// \todo :( No effect
+				m_layout->removeWidget(group); /// \todo :( No effect
 				//delete group;
 				break;
 			}
@@ -125,16 +157,16 @@ namespace RibbonWidget
 
 	int RibbonTab::groupCount() const
 	{
-		return ui->ribbonHorizontalLayout->count();
+		return m_layout->count()-1;
 	}
 
 	void RibbonTab::addButton(const QString& groupName, RibbonButton* button)
 	{
 		// Find ribbon group
 		RibbonButtonGroup* ribbonButtonGroup = nullptr;
-		for (int i = 0; i < ui->ribbonHorizontalLayout->count(); i++)
+		for (int i = 0; i < m_layout->count(); i++)
 		{
-			RibbonButtonGroup* group = qobject_cast<RibbonButtonGroup*>(ui->ribbonHorizontalLayout->itemAt(i)->widget());
+			RibbonButtonGroup* group = qobject_cast<RibbonButtonGroup*>(m_layout->itemAt(i)->widget());
 			if (group->getTitle().toLower() == groupName.toLower())
 			{
 				ribbonButtonGroup = group;
@@ -162,9 +194,9 @@ namespace RibbonWidget
 	{
 		// Find ribbon group
 		RibbonButtonGroup* ribbonButtonGroup = nullptr;
-		for (int i = 0; i < ui->ribbonHorizontalLayout->count(); i++)
+		for (int i = 0; i < m_layout->count(); i++)
 		{
-			RibbonButtonGroup* group = qobject_cast<RibbonButtonGroup*>(ui->ribbonHorizontalLayout->itemAt(i)->widget());
+			RibbonButtonGroup* group = qobject_cast<RibbonButtonGroup*>(m_layout->itemAt(i)->widget());
 			if (group->getTitle().toLower() == groupName.toLower())
 			{
 				ribbonButtonGroup = group;
@@ -183,6 +215,50 @@ namespace RibbonWidget
 				// Empty button group
 				// Remove button group
 				removeGroup(ribbonButtonGroup);
+			}
+		}
+	}
+	void RibbonTab::onOrientationChanged(Qt::Orientation o)
+	{
+		if (o == m_orientation)
+			return;
+		m_orientation = o;
+		std::vector<RibbonButtonGroup*> widgets;
+		widgets.reserve(m_layout->count());
+		m_layout->removeItem(m_spacer);
+		delete m_spacer;
+		for (int i = 0; i < m_layout->count(); i++)
+		{
+			RibbonButtonGroup* group = qobject_cast<RibbonButtonGroup*>(m_layout->itemAt(i)->widget());
+			widgets.push_back(group);
+		}
+
+		for (int i = 0; i < widgets.size(); i++)
+		{
+			widgets[i]->onOrientationChanged(m_orientation);
+			m_layout->removeWidget(widgets[i]);
+		}
+		switch (m_orientation)
+		{
+			case Qt::Orientation::Horizontal:
+			{				
+				for (int i = 0; i < widgets.size(); i++)
+				{
+					m_layout->addWidget(widgets[i], 0, i);
+				}
+				m_spacer = new QSpacerItem(20, 40, QSizePolicy::Expanding, QSizePolicy::Minimum);
+				m_layout->addItem(m_spacer, 0, widgets.size());
+				break;
+			}
+			case Qt::Orientation::Vertical:
+			{
+				for (int i = 0; i < widgets.size(); i++)
+				{
+					m_layout->addWidget(widgets[i], i, 0);
+				}
+				m_spacer = new QSpacerItem(20, 40, QSizePolicy::Minimum, QSizePolicy::Expanding);
+				m_layout->addItem(m_spacer, widgets.size(), 0);
+				break;
 			}
 		}
 	}

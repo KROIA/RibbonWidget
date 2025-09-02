@@ -54,7 +54,14 @@ namespace RibbonWidget
 		/// \param[in] button The button
 		void removeButton(RibbonButton* button);
 
+	public slots:
+		void onOrientationChanged(Qt::Orientation o);
+
+	protected:
+		//void paintEvent(QPaintEvent* event) override;
+		//QSize sizeHint() const override;
 	private:
 		Ui::RibbonButtonGroup* ui;
+		Qt::Orientation m_orientation;
 	};
 }

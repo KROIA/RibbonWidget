@@ -2,17 +2,19 @@
 #include "RibbonStructure/RibbonTab.h"
 #include <QApplication>
 #include <QLayout>
+#include <QDebug>
+
 #include <QFrame>
 
 namespace RibbonWidget
 {
-	Ribbon::Ribbon(QWidget* parent)
-		: m_tabWidget(parent)
+	Ribbon::Ribbon(QToolBar* parent)
+		: m_parent(parent)
 	{
 		setup();
 	}
-	Ribbon::Ribbon(const std::vector<RibbonTab*>& tabs, QWidget* parent)
-		: m_tabWidget(parent)
+	Ribbon::Ribbon(const std::vector<RibbonTab*>& tabs, QToolBar* parent)
+		: m_parent(parent)
 	{
 		setup();
 		for (auto tab : tabs)
@@ -31,6 +33,7 @@ namespace RibbonWidget
 		m_tabWidget.addTab(tab, tab->getIcon(), tab->getTitle());
 		connect(tab, &RibbonTab::titleChanged, this, &Ribbon::onTabTitleChanged);
 		connect(tab, &RibbonTab::iconChanged, this, &Ribbon::onTabIconChanged);
+		connect(this, &Ribbon::orientationChanged, tab, &RibbonTab::onOrientationChanged);
 	}
 	QTabWidget* Ribbon::getTabWidget()
 	{
@@ -43,27 +46,48 @@ namespace RibbonWidget
 
 	void Ribbon::setup()
 	{
-		QLayout* layout = nullptr;
-		if(m_tabWidget.parentWidget())
-			layout = m_tabWidget.parentWidget()->layout();
-		if (!layout)
-			layout = new QVBoxLayout;
-		layout->setContentsMargins(0, 0, 0, 0);
-		m_tabWidget.parentWidget()->setLayout(layout);
-		layout->addWidget(&m_tabWidget);
+		//QLayout* layout = nullptr;
+
+		//if(m_tabWidget.parentWidget())
+		//	layout = m_tabWidget.parentWidget()->layout();
+		//if (!layout)
+		//	layout = new QVBoxLayout;
+		//layout->setContentsMargins(0, 0, 0, 0);
+		//m_tabWidget.parentWidget()->setLayout(layout);
+		//layout->addWidget(&m_tabWidget);
 
 		// Creating a horizontal line using QFrame
-		QFrame* horizontalLine = new QFrame();
-		horizontalLine->setFrameShape(QFrame::HLine);
-		horizontalLine->setFrameShadow(QFrame::Sunken);
+		//QFrame* horizontalLine = new QFrame();
+		//horizontalLine->setFrameShape(QFrame::HLine);
+		//horizontalLine->setFrameShadow(QFrame::Sunken);
 
-		layout->addWidget(horizontalLine);
+		//layout->addWidget(horizontalLine);
 
 		
 		//m_tabWidget.setMinimumHeight(100);
-		if (m_tabWidget.parentWidget())
+		//if (m_tabWidget.parentWidget())
+		//{
+		//	m_tabWidget.parentWidget()->setFixedHeight(130);
+		//}
+
+		if (m_parent)
 		{
-			m_tabWidget.parentWidget()->setFixedHeight(130);
+			m_parent->addWidget(&m_tabWidget);
+
+			connect(m_parent, &QToolBar::orientationChanged,
+				this, [this](Qt::Orientation o) {
+					if (o == Qt::Horizontal)
+					{
+						m_tabWidget.setTabPosition(QTabWidget::North);
+						//qDebug() << "Now horizontal";
+					}
+					else
+					{
+						m_tabWidget.setTabPosition(QTabWidget::West);
+						//qDebug() << "Now vertical";
+					}
+					emit orientationChanged(o);
+				});
 		}
 
 

@@ -3,6 +3,7 @@
 #include "RibbonWidget_base.h"
 #include <QWidget>
 #include <QIcon>
+#include <QGridLayout>
 
 
 namespace Ui {
@@ -82,9 +83,15 @@ namespace RibbonWidget
 	signals: 
 		void titleChanged(const QString& title);
 		void iconChanged(const QIcon& icon);
+
+	public slots:
+		void onOrientationChanged(Qt::Orientation o);
 	private:
 		Ui::RibbonTab* ui;
 		QString m_title; ///< Name of the tab
 		QIcon m_icon; ///< Icon of the tab
+		QGridLayout* m_layout;
+		Qt::Orientation m_orientation;
+		QSpacerItem* m_spacer;
 	};
 }

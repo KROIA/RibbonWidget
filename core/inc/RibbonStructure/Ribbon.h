@@ -2,6 +2,7 @@
 
 #include "RibbonWidget_base.h"
 #include <QTabWidget>
+#include <QToolBar>
 
 namespace RibbonWidget
 {
@@ -10,8 +11,8 @@ namespace RibbonWidget
 	{
 		Q_OBJECT
 	public:
-		explicit Ribbon(QWidget* parent = nullptr);
-		Ribbon(const std::vector<RibbonTab*> &tabs, QWidget* parent = nullptr);
+		explicit Ribbon(QToolBar* parent = nullptr);
+		Ribbon(const std::vector<RibbonTab*> &tabs, QToolBar* parent = nullptr);
 		virtual ~Ribbon();
 
 		void addTab(RibbonTab* tab);
@@ -60,6 +61,8 @@ namespace RibbonWidget
 		/// \param[in] button The button
 		void removeButton(const QString& tabName, const QString& groupName, RibbonButton* button);
 		*/
+	signals:
+		void orientationChanged(Qt::Orientation o);
 
 	private slots:
 		void onTabTitleChanged(const QString& title);
@@ -72,5 +75,6 @@ namespace RibbonWidget
 
 
 		QTabWidget m_tabWidget;
+		QToolBar* m_parent = nullptr;
 	};
 }
