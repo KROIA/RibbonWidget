@@ -9,12 +9,14 @@
 namespace RibbonWidget
 {
 	Ribbon::Ribbon(QToolBar* parent)
-		: m_parent(parent)
+		: QObject(parent)
+		, m_parent(parent)
 	{
 		setup();
 	}
 	Ribbon::Ribbon(const std::vector<RibbonTab*>& tabs, QToolBar* parent)
-		: m_parent(parent)
+		: QObject(parent)
+		, m_parent(parent)
 	{
 		setup();
 		for (auto tab : tabs)
