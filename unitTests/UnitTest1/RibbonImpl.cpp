@@ -1,7 +1,7 @@
 #include "RibbonImpl.h"
 
 
-RibbonImpl::RibbonImpl(QWidget* parent)
+RibbonImpl::RibbonImpl(QToolBar* parent)
 	: RibbonWidget::Ribbon(parent)
 {
 	// Create tabs

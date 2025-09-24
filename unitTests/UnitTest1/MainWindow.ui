@@ -14,7 +14,7 @@
    <string>MainWindow</string>
   </property>
   <widget class="QWidget" name="centralWidget">
-   <layout class="QVBoxLayout" name="verticalLayout" stretch="1,1">
+   <layout class="QVBoxLayout" name="verticalLayout" stretch="1">
     <property name="spacing">
      <number>0</number>
     </property>
@@ -33,29 +33,6 @@
     <property name="bottomMargin">
      <number>0</number>
     </property>
-    <item>
-     <widget class="QWidget" name="ribbon_widget" native="true">
-      <property name="sizePolicy">
-       <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
-        <horstretch>0</horstretch>
-        <verstretch>0</verstretch>
-       </sizepolicy>
-      </property>
-      <property name="minimumSize">
-       <size>
-        <width>0</width>
-        <height>10</height>
-       </size>
-      </property>
-      <property name="maximumSize">
-       <size>
-        <width>16777215</width>
-        <height>150</height>
-       </size>
-      </property>
-      <layout class="QVBoxLayout" name="verticalLayout_2"/>
-     </widget>
-    </item>
     <item>
      <widget class="QWidget" name="widget" native="true">
       <widget class="QPushButton" name="pushButton">
@@ -81,7 +58,7 @@
      <x>0</x>
      <y>0</y>
      <width>916</width>
-     <height>21</height>
+     <height>20</height>
     </rect>
    </property>
   </widget>
