@@ -89,7 +89,7 @@ namespace RibbonWidget
 /// USER_SECTION_START 4
 
 /// USER_SECTION_END
-	class RIBBON_WIDGET_EXPORT Profiler
+	class RIBBON_WIDGET_API Profiler
 	{
 	public:
 		/// USER_SECTION_START 5
@@ -112,7 +112,7 @@ namespace RibbonWidget
 
 
 #if LOGGER_LIBRARY_AVAILABLE == 1
-	class RIBBON_WIDGET_EXPORT Logger 
+	class RIBBON_WIDGET_API Logger 
 	{
 		/// USER_SECTION_START 8
 

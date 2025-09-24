@@ -11,13 +11,13 @@
 #ifndef BUILD_STATIC
 	//#pragma message("RIBBONWIDGET_LIB is a shared library")
 	#if defined(RIBBONWIDGET_LIB)
-		#define RIBBON_WIDGET_EXPORT __declspec(dllexport)
+		#define RIBBON_WIDGET_API __declspec(dllexport)
 	#else
-		#define RIBBON_WIDGET_EXPORT __declspec(dllimport)
+		#define RIBBON_WIDGET_API __declspec(dllimport)
 	#endif
 #else 
 	//#pragma message("RIBBONWIDGET_LIB is a static library")
-	#define RIBBON_WIDGET_EXPORT
+	#define RIBBON_WIDGET_API
 #endif
 
 /// USER_SECTION_START 2

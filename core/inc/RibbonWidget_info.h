@@ -29,7 +29,7 @@ namespace RibbonWidget
 
 /// USER_SECTION_END
 
-	class RIBBON_WIDGET_EXPORT LibraryInfo
+	class RIBBON_WIDGET_API LibraryInfo
 	{
 		LibraryInfo() = delete;
 		LibraryInfo(const LibraryInfo&) = delete;
