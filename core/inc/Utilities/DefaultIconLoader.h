@@ -7,7 +7,7 @@
 
 namespace RibbonWidget
 {
-	class RIBBON_WIDGET_EXPORT DefaultIconLoader
+	class RIBBON_WIDGET_API DefaultIconLoader
 	{
 	public:
 		static DefaultIconLoader& instance();

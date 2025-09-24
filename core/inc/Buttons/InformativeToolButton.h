@@ -12,7 +12,7 @@
 
 namespace RibbonWidget
 {
-    class RIBBON_WIDGET_EXPORT InformativeToolButton : public RibbonButton
+    class RIBBON_WIDGET_API InformativeToolButton : public RibbonButton
     {
         Q_OBJECT
     public:

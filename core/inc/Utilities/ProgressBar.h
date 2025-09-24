@@ -6,7 +6,7 @@
 #include <QColor>
 #include <QPainter>
 
-class RIBBON_WIDGET_EXPORT ProgressBar: public QObject
+class RIBBON_WIDGET_API ProgressBar: public QObject
 {
         Q_OBJECT
     public:

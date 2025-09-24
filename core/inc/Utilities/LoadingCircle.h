@@ -7,7 +7,7 @@
 #include <QColor>
 #include <QPainter>
 
-class RIBBON_WIDGET_EXPORT LoadingCircle : public QObject
+class RIBBON_WIDGET_API LoadingCircle : public QObject
 {
     Q_OBJECT
     public:
