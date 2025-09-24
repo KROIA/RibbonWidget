@@ -7,7 +7,7 @@
 namespace RibbonWidget
 {
 	class RibbonTab;
-	class RIBBON_WIDGET_EXPORT Ribbon: public QObject
+	class RIBBON_WIDGET_API Ribbon: public QObject
 	{
 		Q_OBJECT
 	public:

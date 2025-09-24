@@ -8,7 +8,7 @@
 namespace RibbonWidget
 {
 	class RibbonButtonGroup;
-	class RIBBON_WIDGET_EXPORT RibbonButton : public QToolButton
+	class RIBBON_WIDGET_API RibbonButton : public QToolButton
 	{
 
 	public:

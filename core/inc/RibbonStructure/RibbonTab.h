@@ -14,7 +14,7 @@ namespace RibbonWidget
 	class RibbonButtonGroup;
 	class RibbonButton;
 	class Ribbon;
-	class RIBBON_WIDGET_EXPORT RibbonTab : public QWidget
+	class RIBBON_WIDGET_API RibbonTab : public QWidget
 	{
 		Q_OBJECT
 	public:
