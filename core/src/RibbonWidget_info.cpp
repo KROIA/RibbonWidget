@@ -167,9 +167,10 @@ namespace RibbonWidget
 		return widget;
 	}
 #else
-	QWidget* LibraryInfo::createInfoWidget(QWidget* parent)
+	QWidget* LibraryInfo::createInfoWidget(QWidget* parent, bool disableHyperlink)
 	{
 		RW_UNUSED(parent);
+		RW_UNUSED(disableHyperlink);
 		return nullptr;
 	}
 #endif
