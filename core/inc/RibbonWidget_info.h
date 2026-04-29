@@ -6,6 +6,7 @@
 
 #include "RibbonWidget_global.h"
 #include "RibbonWidget_debug.h"
+#include "RibbonWidget_meta.h"
 
 #include <sstream>
 
@@ -53,15 +54,15 @@ namespace RibbonWidget
 		};
 
 
-		// Current version of the library
-		static constexpr int versionMajor				= 1;
-		static constexpr int versionMinor				= 0;
-		static constexpr int versionPatch				= 0;
+		// Current version of the library — driven by LIBRARY_VERSION in CMakeLists.txt
+		static constexpr int versionMajor				= RibbonWidget_VERSION_MAJOR;
+		static constexpr int versionMinor				= RibbonWidget_VERSION_MINOR;
+		static constexpr int versionPatch				= RibbonWidget_VERSION_PATCH;
 
 		static constexpr Version version{ versionMajor, versionMinor, versionPatch };
 
-		// Library name
-		static constexpr const char* name				= "RibbonWidget";
+		// Library name — driven by LIBRARY_NAME in CMakeLists.txt
+		static constexpr const char* name				= RibbonWidget_LIBRARY_NAME;
 		static constexpr const char* author				= "Alex Krieg";
 		static constexpr const char* email				= "";
 		static constexpr const char* website			= "";
