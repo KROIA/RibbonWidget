@@ -14,6 +14,11 @@ namespace RibbonWidget
 	class RibbonButtonGroup;
 	class RibbonButton;
 	class Ribbon;
+	/// A tab of the ribbon.
+	///
+	/// Constructing a tab with a Ribbon* parent adds it to that ribbon.
+	/// Calling Ribbon::addTab() for it again is a no-op.
+	/// A tab constructed without a parent can be added later with Ribbon::addTab().
 	class RIBBON_WIDGET_API RibbonTab : public QWidget
 	{
 		Q_OBJECT

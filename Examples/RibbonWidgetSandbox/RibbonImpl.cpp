@@ -1,4 +1,6 @@
 #include "RibbonImpl.h"
+#include <QAction>
+#include <QDebug>
 
 
 RibbonImpl::RibbonImpl(QToolBar* parent)
@@ -25,8 +27,31 @@ RibbonImpl::RibbonImpl(QToolBar* parent)
 	m_workButtons.open = new RibbonWidget::InformativeToolButton("Open", "Open", ":/icons/document.png", true, groupWork);
 	m_workButtons.save = new RibbonWidget::InformativeToolButton("Save", "Save", ":/icons/floppy_disk.png", true, groupWork);
 
-	m_editButtons.undo = new RibbonWidget::RibbonButton("Undo", "Undo", ":/icons/arrowCClockwise.png", true, groupEdit);
-	m_editButtons.redo = new RibbonWidget::RibbonButton("Redo", "Redo", ":/icons/arrowClockwise.png", true, groupEdit);
+	// Buttons bound to QActions: they follow the action's text, icon, enabled and checked state,
+	// and the tooltip shows the shortcut ("Undo (Ctrl+Z)")
+	QAction* undoAction = new QAction(RibbonWidget::DefaultIconLoader::getIcon(":/icons/arrowCClockwise.png"), "Undo", this);
+	undoAction->setShortcut(QKeySequence::Undo);
+	QAction* redoAction = new QAction(RibbonWidget::DefaultIconLoader::getIcon(":/icons/arrowClockwise.png"), "Redo", this);
+	redoAction->setShortcut(QKeySequence::Redo);
+	redoAction->setEnabled(false);
+	QAction* gridAction = new QAction(RibbonWidget::DefaultIconLoader::getIcon(":/icons/table.png"), "Grid", this);
+	gridAction->setCheckable(true);
+
+	connect(undoAction, &QAction::triggered, this, [redoAction]() {
+		qDebug() << "Undo";
+		redoAction->setEnabled(true);
+		});
+	connect(redoAction, &QAction::triggered, this, [redoAction]() {
+		qDebug() << "Redo";
+		redoAction->setEnabled(false);
+		});
+	connect(gridAction, &QAction::toggled, this, [](bool checked) {
+		qDebug() << "Grid" << checked;
+		});
+
+	m_editButtons.undo = new RibbonWidget::RibbonButton(undoAction, groupEdit);
+	m_editButtons.redo = new RibbonWidget::RibbonButton(redoAction, groupEdit);
+	m_editButtons.grid = new RibbonWidget::RibbonButton(gridAction, groupEdit);
 
 	m_viewButtons.view1 = new RibbonWidget::InformativeToolButton("View 1", "View 1", ":/icons/file_2.png", true, groupEdit);
 	m_viewButtons.view1->setLoadingCircleColor(QColor(255, 0, 0));
@@ -37,9 +62,7 @@ RibbonImpl::RibbonImpl(QToolBar* parent)
 	m_viewButtons.view2->setProgress(50);
 	m_viewButtons.view3 = new RibbonWidget::InformativeToolButton("View 1", "View 1", ":/icons/file_2.png", true, groupEdit);
 
-	// Add tabs
-	addTab(tabSettings);
-	addTab(tabEdit);
+	// The tabs were added to the ribbon by their constructors (parent = this)
 }
 
 RibbonImpl::SettingsButtons& RibbonImpl::settingsButtons()

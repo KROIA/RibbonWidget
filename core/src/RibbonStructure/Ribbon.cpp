@@ -26,24 +26,114 @@ namespace RibbonWidget
 	}
 	Ribbon::~Ribbon()
 	{
-
+		// m_tabWidget is null if the toolbar has already deleted it
+		if (m_tabWidget)
+		{
+			m_tabWidget->disconnect(this);
+			delete m_tabWidget;
+		}
 	}
 
 
 	void Ribbon::addTab(RibbonTab* tab)
 	{
-		m_tabWidget.addTab(tab, tab->getIcon(), tab->getTitle());
+		if (!tab || !m_tabWidget || m_tabWidget->indexOf(tab) != -1)
+			return;
+		m_tabWidget->addTab(tab, tab->getIcon(), tab->getTitle());
 		connect(tab, &RibbonTab::titleChanged, this, &Ribbon::onTabTitleChanged);
 		connect(tab, &RibbonTab::iconChanged, this, &Ribbon::onTabIconChanged);
 		connect(this, &Ribbon::orientationChanged, tab, &RibbonTab::onOrientationChanged);
 	}
+	void Ribbon::removeTab(RibbonTab* tab)
+	{
+		if (!tab || !m_tabWidget)
+			return;
+		int index = m_tabWidget->indexOf(tab);
+		if (index == -1)
+			return;
+		disconnect(tab, &RibbonTab::titleChanged, this, &Ribbon::onTabTitleChanged);
+		disconnect(tab, &RibbonTab::iconChanged, this, &Ribbon::onTabIconChanged);
+		disconnect(this, &Ribbon::orientationChanged, tab, &RibbonTab::onOrientationChanged);
+		if (index == m_tabWidget->currentIndex())
+			selectVisibleNeighbour(index);
+		m_tabWidget->removeTab(index);
+		tab->setParent(nullptr);
+		updateCurrentTab();
+	}
+	void Ribbon::setTabVisible(RibbonTab* tab, bool visible)
+	{
+		if (!tab || !m_tabWidget)
+			return;
+		int index = m_tabWidget->indexOf(tab);
+		if (index == -1)
+			return;
+		// Move the selection away first, so a hidden tab never stays current
+		if (!visible && index == m_tabWidget->currentIndex())
+			selectVisibleNeighbour(index);
+		m_tabWidget->setTabVisible(index, visible);
+		updateCurrentTab();
+	}
+	bool Ribbon::isTabVisible(const RibbonTab* tab) const
+	{
+		if (!tab || !m_tabWidget)
+			return false;
+		int index = m_tabWidget->indexOf(const_cast<RibbonTab*>(tab));
+		return index != -1 && m_tabWidget->isTabVisible(index);
+	}
+	void Ribbon::setCurrentTab(RibbonTab* tab)
+	{
+		if (!tab || !m_tabWidget)
+			return;
+		int index = m_tabWidget->indexOf(tab);
+		if (index == -1 || !m_tabWidget->isTabVisible(index))
+			return;
+		m_tabWidget->setCurrentIndex(index);
+	}
+	RibbonTab* Ribbon::currentTab() const
+	{
+		if (!m_tabWidget)
+			return nullptr;
+		int index = m_tabWidget->currentIndex();
+		if (index == -1 || !m_tabWidget->isTabVisible(index))
+			return nullptr;
+		return qobject_cast<RibbonTab*>(m_tabWidget->widget(index));
+	}
 	QTabWidget* Ribbon::getTabWidget()
 	{
-		return &m_tabWidget;
+		return m_tabWidget.data();
 	}
 	const QTabWidget* Ribbon::getTabWidget() const
 	{
-		return &m_tabWidget;
+		return m_tabWidget.data();
+	}
+
+	void Ribbon::selectVisibleNeighbour(int index)
+	{
+		const int count = m_tabWidget->count();
+		for (int i = index + 1; i < count; ++i)
+		{
+			if (m_tabWidget->isTabVisible(i))
+			{
+				m_tabWidget->setCurrentIndex(i);
+				return;
+			}
+		}
+		for (int i = index - 1; i >= 0; --i)
+		{
+			if (m_tabWidget->isTabVisible(i))
+			{
+				m_tabWidget->setCurrentIndex(i);
+				return;
+			}
+		}
+	}
+	void Ribbon::updateCurrentTab()
+	{
+		RibbonTab* tab = currentTab();
+		if (tab == m_currentTab)
+			return;
+		m_currentTab = tab;
+		emit currentTabChanged(tab);
 	}
 
 	void Ribbon::setup()
@@ -72,20 +162,26 @@ namespace RibbonWidget
 		//	m_tabWidget.parentWidget()->setFixedHeight(130);
 		//}
 
+		m_tabWidget = new QTabWidget;
+		connect(m_tabWidget, &QTabWidget::currentChanged, this, &Ribbon::updateCurrentTab);
+
 		if (m_parent)
 		{
-			m_parent->addWidget(&m_tabWidget);
+			// The toolbar takes ownership of the tab widget
+			m_parent->addWidget(m_tabWidget);
 
 			connect(m_parent, &QToolBar::orientationChanged,
 				this, [this](Qt::Orientation o) {
+					if (!m_tabWidget)
+						return;
 					if (o == Qt::Horizontal)
 					{
-						m_tabWidget.setTabPosition(QTabWidget::North);
+						m_tabWidget->setTabPosition(QTabWidget::North);
 						//qDebug() << "Now horizontal";
 					}
 					else
 					{
-						m_tabWidget.setTabPosition(QTabWidget::West);
+						m_tabWidget->setTabPosition(QTabWidget::West);
 						//qDebug() << "Now vertical";
 					}
 					emit orientationChanged(o);
@@ -99,7 +195,7 @@ namespace RibbonWidget
 
 		// Note: the order in which the background/palette/stylesheet functions are
 		// called does matter. Should be same as in Qt designer.
-		m_tabWidget.setAutoFillBackground(true);
+		m_tabWidget->setAutoFillBackground(true);
 
 		// Set stylesheet
 		QString styleSheetText = QString(
@@ -141,29 +237,29 @@ namespace RibbonWidget
 		).arg(bg.red()).arg(bg.green()).arg(bg.blue())
 			.arg(mid.red()).arg(mid.green()).arg(mid.blue());
 
-		m_tabWidget.setStyleSheet(styleSheetText);
+		m_tabWidget->setStyleSheet(styleSheetText);
 
 		// Set background color
-		QPalette pal = m_tabWidget.palette();
+		QPalette pal = m_tabWidget->palette();
 		pal.setColor(QPalette::Window, Qt::white);
-		m_tabWidget.setPalette(pal);
+		m_tabWidget->setPalette(pal);
 	}
 
 	void Ribbon::onTabTitleChanged(const QString& title)
 	{
 		RibbonTab* tab = qobject_cast<RibbonTab*>(sender());
-		if (!tab)
+		if (!tab || !m_tabWidget)
 			return;
-		int index = m_tabWidget.indexOf(tab);
-		m_tabWidget.setTabText(index, title);
+		int index = m_tabWidget->indexOf(tab);
+		m_tabWidget->setTabText(index, title);
 	}
 	void Ribbon::onTabIconChanged(const QIcon& icon)
 	{
 		RibbonTab* tab = qobject_cast<RibbonTab*>(sender());
-		if (!tab)
+		if (!tab || !m_tabWidget)
 			return;
-		int index = m_tabWidget.indexOf(tab);
-		m_tabWidget.setTabIcon(index, icon);
+		int index = m_tabWidget->indexOf(tab);
+		m_tabWidget->setTabIcon(index, icon);
 	}
 
 	/*

@@ -13,6 +13,7 @@
 // Instantiate Tests here:
 // TEST_INSTANTIATE(Test_simple); // Where Test_simple is a derived class from the Test class
 TEST_INSTANTIATE(TST_simple); 
+TEST_INSTANTIATE(TST_ribbon);
 
 int main(int argc, char* argv[])
 {

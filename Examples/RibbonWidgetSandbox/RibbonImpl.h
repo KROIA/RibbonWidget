@@ -28,6 +28,7 @@ class RibbonImpl : public RibbonWidget::Ribbon
 		{
 			RibbonWidget::RibbonButton* undo;
 			RibbonWidget::RibbonButton* redo;
+			RibbonWidget::RibbonButton* grid;
 		};
 
 		struct ViewButtons

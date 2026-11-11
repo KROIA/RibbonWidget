@@ -10,24 +10,24 @@
 namespace RibbonWidget
 {
 	RibbonTab::RibbonTab(Ribbon* parent)
-		: QWidget(parent->getTabWidget())
+		: QWidget(parent ? parent->getTabWidget() : nullptr)
 		, ui(new Ui::RibbonTab)
 		, m_title("")
 		, m_orientation(Qt::Orientation::Horizontal)
 	{
 		ui->setupUi(this);
-		if(parent)
-			parent->addTab(this);
 		m_layout = dynamic_cast<QGridLayout*>(ui->ribbonTabScrollAreaContent->layout());
 		m_spacer = new QSpacerItem(20, 40, QSizePolicy::Expanding, QSizePolicy::Minimum);
 		m_layout->addItem(m_spacer, 0, m_layout->count());
+		if (parent)
+			parent->addTab(this); // last, so the tab is fully set up when the ribbon signals it
 	}
 	RibbonTab::RibbonTab(
 		const QString& tabTitle,
 		const QIcon& tabIcon,
 		const std::vector<RibbonButtonGroup*>& groups,
 		Ribbon* parent)
-		: QWidget(parent->getTabWidget())
+		: QWidget(parent ? parent->getTabWidget() : nullptr)
 		, ui(new Ui::RibbonTab)
 		, m_title("")
 		, m_icon()
@@ -40,18 +40,18 @@ namespace RibbonWidget
 		{
 			addGroup(group);
 		}
-		if (parent)
-			parent->addTab(this);
 		m_layout = dynamic_cast<QGridLayout*>(ui->ribbonTabScrollAreaContent->layout());
 		m_spacer = new QSpacerItem(20, 40, QSizePolicy::Expanding, QSizePolicy::Minimum);
 		m_layout->addItem(m_spacer, 0, m_layout->count());
+		if (parent)
+			parent->addTab(this); // last, so the tab is fully set up when the ribbon signals it
 	}
 	RibbonTab::RibbonTab(
 		const QString& tabTitle,
 		const QString& iconPath,
 		const std::vector<RibbonButtonGroup*>& groups,
 		Ribbon* parent)
-		: QWidget(parent->getTabWidget())
+		: QWidget(parent ? parent->getTabWidget() : nullptr)
 		, ui(new Ui::RibbonTab)
 		, m_title("")
 		, m_icon()
@@ -64,17 +64,17 @@ namespace RibbonWidget
 		{
 			addGroup(group);
 		}
-		if (parent)
-			parent->addTab(this);
 		m_layout = dynamic_cast<QGridLayout*>(ui->ribbonTabScrollAreaContent->layout());
 		m_spacer = new QSpacerItem(20, 40, QSizePolicy::Expanding, QSizePolicy::Minimum);
 		m_layout->addItem(m_spacer, 0, m_layout->count());
+		if (parent)
+			parent->addTab(this); // last, so the tab is fully set up when the ribbon signals it
 	}
 	RibbonTab::RibbonTab(
 		const QString& tabTitle,
 		const QString& iconPath,
 		Ribbon* parent)
-		: QWidget(parent->getTabWidget())
+		: QWidget(parent ? parent->getTabWidget() : nullptr)
 		, ui(new Ui::RibbonTab)
 		, m_title("")
 		, m_icon()
@@ -83,11 +83,11 @@ namespace RibbonWidget
 		ui->setupUi(this);
 		setTitle(tabTitle);
 		setIcon(DefaultIconLoader::getIcon(iconPath));
-		if (parent)
-			parent->addTab(this);
 		m_layout = dynamic_cast<QGridLayout*>(ui->ribbonTabScrollAreaContent->layout());
 		m_spacer = new QSpacerItem(20, 40, QSizePolicy::Expanding, QSizePolicy::Minimum);
 		m_layout->addItem(m_spacer, 0, m_layout->count());
+		if (parent)
+			parent->addTab(this); // last, so the tab is fully set up when the ribbon signals it
 	}
 
 

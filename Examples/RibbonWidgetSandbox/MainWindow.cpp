@@ -19,7 +19,7 @@ MainWindow::MainWindow(QWidget *parent)
 
 MainWindow::~MainWindow()
 {
-	delete m_ribbon;
+	// m_ribbon is a child of the toolbar and is deleted with it
 }
 
 void MainWindow::onOpenClicked()

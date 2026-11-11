@@ -31,6 +31,12 @@ namespace RibbonWidget
         setup();
     }
 
+    InformativeToolButton::InformativeToolButton(QAction* action, RibbonButtonGroup* parent)
+        : RibbonButton(action, parent)
+    {
+        setup();
+    }
+
     InformativeToolButton::~InformativeToolButton()
     {
         delete m_updateTimer;

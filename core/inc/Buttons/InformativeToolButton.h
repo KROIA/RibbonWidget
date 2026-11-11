@@ -27,6 +27,11 @@ namespace RibbonWidget
             const QString& iconName,
             bool enabled,
             RibbonButtonGroup* parent = nullptr);
+        /// Create a button bound to an action. See RibbonButton::RibbonButton(QAction*, RibbonButtonGroup*).
+        ///
+        /// \param[in] action The action, not owned by the button
+        /// \param[in] parent The group the button is added to
+        explicit InformativeToolButton(QAction* action, RibbonButtonGroup* parent = nullptr);
         ~InformativeToolButton();
 
         void setOverlayColor(const QColor& color);
